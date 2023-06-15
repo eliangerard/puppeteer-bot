@@ -1,0 +1,27 @@
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require("discord.js");
+const puppeteer = require('puppeteer');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('press')
+		.setDescription('Press a keyboard key')
+        .addStringOption(option => option.setName('key').setDescription('The keyboard key to press').setRequired(true)),
+	async execute(interaction, client) {
+        const key = interaction.options.getString('key');
+
+		if(!client.browser)
+            client.browser = await puppeteer.launch({ headless: false });
+
+        await client.browser.lastPage.keyboard.press(key);
+
+		const embed = new EmbedBuilder()
+                .setTitle("Pressed "+key)
+                .setColor("#00FF00");
+
+        interaction.editReply( { embeds: [embed] } ).then(msg => {
+            setTimeout(() => msg.delete(), 15000)
+        });
+
+	},
+};
