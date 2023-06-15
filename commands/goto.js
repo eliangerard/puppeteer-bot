@@ -12,7 +12,8 @@ module.exports = {
 
 		if(!client.browser)
             client.browser = await puppeteer.launch({ 
-                headless: false,
+                headless: true,
+                executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
                 args: ['--start-maximized']
             });
 
