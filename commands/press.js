@@ -10,8 +10,15 @@ module.exports = {
 	async execute(interaction, client) {
         const key = interaction.options.getString('key');
 
-		if(!client.browser)
-            client.browser = await puppeteer.launch({ headless: false });
+		if(!client.browser) {
+            const embed = new EmbedBuilder()
+                    .setTitle("There is no open browser")
+                    .setColor("#FF0000");
+    
+            return interaction.editReply( { embeds: [embed] } ).then(msg => {
+                setTimeout(() => msg.delete(), 15000)
+            });
+        }
 
         await client.browser.lastPage.keyboard.press(key);
 

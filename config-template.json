@@ -1,5 +1,6 @@
 {
     "clientId" : "BOT CLIENT ID",
+    "browserPath" : "",
     "token": "BOT TOKEN",
     "prefix" : "!"
 }
